@@ -1,0 +1,44 @@
+-- Create the ScreenGui
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "SpeedControlGui"
+screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+-- Create a Frame to hold the bar and button
+local frame = Instance.new("Frame")
+frame.Name = "MainFrame"
+frame.Size = UDim2.new(0, 400, 0, 100)
+frame.Position = UDim2.new(0.5, -200, 0.5, -50)
+frame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+frame.Parent = screenGui
+
+-- Create a Slider (TextBox for simplicity)
+local slider = Instance.new("TextBox")
+slider.Name = "SpeedSlider"
+slider.Size = UDim2.new(0, 300, 0, 30)
+slider.Position = UDim2.new(0.5, -150, 0, 20)
+slider.Text = "Speed: 16"
+slider.TextColor3 = Color3.fromRGB(255, 255, 255)
+slider.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+slider.Parent = frame
+
+-- Create a Continue Button
+local continueButton = Instance.new("TextButton")
+continueButton.Name = "ContinueButton"
+continueButton.Size = UDim2.new(0, 100, 0, 30)
+continueButton.Position = UDim2.new(0.5, -50, 0, 60)
+continueButton.Text = "Continue"
+continueButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+continueButton.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+continueButton.Parent = frame
+
+-- Function to update speed
+local function updateSpeed()
+    local speed = tonumber(slider.Text:match("%d+")) or 16
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = speed
+end
+
+-- Connect the Continue button to update speed function
+continueButton.MouseButton1Click:Connect(updateSpeed)
+
+-- Optional: Function to handle slider input (e.g., to change speed while typing)
+slider.FocusLost:Connect(updateSpeed)
